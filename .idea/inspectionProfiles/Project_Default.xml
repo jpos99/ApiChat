@@ -1,0 +1,45 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="W191" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="sisvendas.sistema.urls.sistema" />
+          <option value="sisvendas.sistema.models.Empresa.*" />
+          <option value="sisvendas.sistema.models.posicao.*" />
+          <option value="sisvendas.sistema.models.vendedor.*" />
+          <option value="sisvendas.sistema.models.Curso.*" />
+          <option value="sisvendas.sistema.models.situacao.*" />
+          <option value="sisvendas.sistema.models.Formando.*" />
+          <option value="sisvendas.sistema.models.pagamento.objects" />
+          <option value="sisvendas.sistema.models.vendaProduto.objects" />
+          <option value="sisvendas.sistema.models.VendaProduto.objects" />
+          <option value="sisvendas.sistema.models.Vendedor.objects" />
+          <option value="sisvendas.sistema.models.FormaComissionamento.objects" />
+          <option value="sisvendas.sistema.models.FormaPagamento.objects" />
+          <option value="sisvendas.sistema.models.TipoVenda.objects" />
+          <option value="sisvendas.sistema.models.Entrada.objects" />
+          <option value="sisvendas.sistema.models.Saida.objects" />
+          <option value="sisvendas.sistema.models.Fisica.objects" />
+          <option value="sisvendas.sistema.models.Pagamento.objects" />
+          <option value="sisvendas.sistema.models.Comissionamento.objects" />
+          <option value="sisvendas.sistema.models.TelefoneFormando.objects" />
+          <option value="sisvendas.sistema.models.historico.objects" />
+          <option value="sisvendas.sistema.models.momentoVenda.objects" />
+          <option value="sisvendas.sistema.models.Produto.objects" />
+          <option value="sisvendas.agendavenda.views.sistema" />
+          <option value="sisvendas.sisvendas.settings.sistema" />
+          <option value="sisvendas.sistema.models.VendaFormando.objects" />
+          <option value="datetime.date.today" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
