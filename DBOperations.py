@@ -3,7 +3,7 @@ import json
 
 
 class DBOperation:
-	DJANGO_ENDPOINT = "https://137.184.172.24/"
+	DJANGO_ENDPOINT = "http://137.184.172.24/"
 
 	def update_chat_db(self, wa_chat, chat_id, formando_id, phone_number):
 		data = {
