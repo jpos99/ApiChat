@@ -1,5 +1,5 @@
 import requests
-from pydantic import json
+import json
 
 
 class DBOperation:
