@@ -28,6 +28,7 @@ class DBOperation:
 		}
 
 		response = requests.get(f"{self.DJANGO_ENDPOINT}conversa/{chat_id}/")
+		print(f"{self.DJANGO_ENDPOINT}conversa/{chat_id}/")
 		print('Conversa response status code', response.status_code)
 		if response.status_code == 404:
 			print('Conversa json data=', data)
