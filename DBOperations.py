@@ -1,7 +1,7 @@
 import requests
 
 class DBOperation:
-	DJANGO_ENDPOINT = "http://localhost:80/"
+	DJANGO_ENDPOINT = "https://sistema.render.net.br/"
 
 	def update_chat_db(self, wa_chat, chat_id, formando_id, phone_number):
 		data = {
