@@ -1,4 +1,6 @@
 import requests
+from pydantic import json
+
 
 class DBOperation:
 	DJANGO_ENDPOINT = "https://sistema.render.net.br/"
@@ -26,6 +28,7 @@ class DBOperation:
 			"last_message_utc_dh_message_unix_time": wa_chat.get('lastMessage', {}).get('utcDhMessageUnixTime', ''),
 			"last_message_is_private": wa_chat.get('lastMessage', {}).get('isPrivate', 'False'),
 		}
+		data = json.loads(data)
 
 		response = requests.get(f"{self.DJANGO_ENDPOINT}conversa/{chat_id}/")
 		print(f"{self.DJANGO_ENDPOINT}conversa/{chat_id}/")
