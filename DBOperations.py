@@ -1,9 +1,11 @@
 import requests
+from credentials import credentials
 import json
 
 
 class DBOperation:
-	DJANGO_ENDPOINT = "http://137.184.172.24/"
+	db_credentials = credentials.DjangoSecrets()
+	DJANGO_ENDPOINT = db_credentials.end_point
 
 	def update_chat_db(self, wa_chat, chat_id, formando_id, phone_number):
 		data = {
