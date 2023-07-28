@@ -1,7 +1,14 @@
 import json
 import requests
+import os
+from dotenv import load_dotenv
 from credentials.credentials import ChatSacAPI
 
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+load_dotenv(os.path.join(BASE_DIR, 'ApiChat', '.env'))
+api_credentials = ChatSacAPI()
 
 class ChatSacAPIService:
 	def __init__(self):
@@ -9,7 +16,7 @@ class ChatSacAPIService:
 
 		def get_sector_id():
 			url = f'{self.base_url_request}sectors'
-			headers = {'access-token': ChatSacAPI.APItoken, 'Accept': 'application/json'}
+			headers = {'access-token': api_credentials.api_token, 'Accept': 'application/json'}
 			response = json.loads(requests.get(url=url, headers=headers).text)
 			return response[0]['id']
 
@@ -20,7 +27,7 @@ class ChatSacAPIService:
 			url = f'{self.base_url_request}contacts/number/{number}'
 		else:
 			url = f'{self.base_url_request}contacts/number/55{number}'
-		headers = {'access-token': ChatSacAPI.APItoken, 'Content-Type': 'application/json'}
+		headers = {'access-token': api_credentials.api_token, 'Content-Type': 'application/json'}
 		response = requests.get(url=url, headers=headers).text
 		response = json.loads(response)
 		return response
@@ -38,7 +45,7 @@ class ChatSacAPIService:
 		}
 		contact_str = json.dumps(contact_data, ensure_ascii=False).encode('utf-8')
 		headers = {
-			'access-token': ChatSacAPI.APItoken,
+			'access-token': api_credentials.api_token,
 			'Accept': 'application/json',
 			'Content-Type': 'application/json; charset=utf-8'
 		}
@@ -48,35 +55,35 @@ class ChatSacAPIService:
 
 	def get_contact_details_by_id(self, contact_id):
 		url = f'{self.base_url_request}contacts/{contact_id}'
-		headers = {'access-token': ChatSacAPI.APItoken, 'Content-Type': 'application/json'}
+		headers = {'access-token': api_credentials.api_token, 'Content-Type': 'application/json'}
 		response = requests.get(url=url, headers=headers).text
 		response = json.loads(response)
 		return response
 
 	def number_exists_wa(self, number):
 		url = f'{self.base_url_request}wa-number-check/{number}'
-		headers = {'access-token': ChatSacAPI.APItoken, 'Accept': 'application/json'}
+		headers = {'access-token': api_credentials.api_token, 'Accept': 'application/json'}
 		response = requests.post(url=url, headers=headers, ).text
 		response = json.loads(response)
 		return response
 
 	def get_channel_status(self):
 		url = f'{self.base_url_request}channel/status'
-		headers = {'access-token': ChatSacAPI.APItoken, 'Accept': 'application/json'}
+		headers = {'access-token': api_credentials.api_token, 'Accept': 'application/json'}
 		response = requests.get(url=url, headers=headers).text
 		response = json.loads(response)
 		return response
 
 	def get_message_by_id(self, id_message):
 		url = f'{self.base_url_request}chats/{id_message}'
-		headers = {'access-token': ChatSacAPI.APItoken, 'Accept': 'application/json'}
+		headers = {'access-token': api_credentials.api_token, 'Accept': 'application/json'}
 		response = requests.get(url=url, headers=headers).text
 		response = json.loads(response)
 		return response
 
 	def get_chat_information_by_id(self, id_chat):
 		url = f'{self.base_url_request}chats/{id_chat}'
-		headers = {'access-token': ChatSacAPI.APItoken, 'Accept': 'application/json'}
+		headers = {'access-token': api_credentials.api_token, 'Accept': 'application/json'}
 		response = requests.get(url=url, headers=headers).text
 		response = json.loads(response)
 		return response
@@ -85,7 +92,7 @@ class ChatSacAPIService:
 		url = f'{self.base_url_request}chats/create-new'
 		body = (str({'number': number, 'contactId': contact_id, 'sectorId': self.sector_id})).replace('\n', '').replace(
 			"'", '"')
-		headers = {'access-token': ChatSacAPI.APItoken, 'Accept': 'application/json',
+		headers = {'access-token': api_credentials.api_token, 'Accept': 'application/json',
 				   'Content-Type': "application/json"}
 		response = requests.post(url=url, data=body, headers=headers).text
 		response = json.loads(response)
@@ -105,7 +112,7 @@ class ChatSacAPIService:
 			"verifyContact": False
 		}
 		headers = {
-			'access-token': ChatSacAPI.APItoken,
+			'access-token': api_credentials.api_token,
 			'Accept': 'application/json',
 			'Content-Type': 'application/json; charset=utf-8'
 		}
@@ -117,7 +124,7 @@ class ChatSacAPIService:
 	def schedule_text_message(self, body):
 		url = f'{self.base_url_request}chats/messages/scheduler'
 		headers = {
-			'access-token': ChatSacAPI.APItoken,
+			'access-token': api_credentials.api_token,
 			'Accept': 'application/json',
 			'Content-Type': 'application/json; charset=utf-8'
 		}

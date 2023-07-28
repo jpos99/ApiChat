@@ -15,4 +15,5 @@ class DjangoSecrets:
 		self.end_point = os.getenv('DJANGO_ENDPOINT')
 
 class ChatSacAPI:
-	APItoken = os.getenv('CHATSAC_TOKEN')
+	def __init__(self):
+		self.api_token = os.getenv('CHATSAC_TOKEN')

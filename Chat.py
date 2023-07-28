@@ -6,10 +6,10 @@ from dotenv import load_dotenv
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-load_dotenv(os.path.join(BASE_DIR, '.env'))
+load_dotenv(os.path.join(BASE_DIR, 'ApiChat', '.env'))
+
 
 chatapp = FastAPI()
-
 
 @chatapp.post('/dispatch')
 async def schedule_text_message(contacts: dict, background_tasks: BackgroundTasks) -> dict:
