@@ -33,3 +33,4 @@ urllib3==2.0.3
 uvicorn==0.23.0
 Werkzeug==2.1.2
 wrapt==1.14.1
+python-dotenv
