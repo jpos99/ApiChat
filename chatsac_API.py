@@ -19,13 +19,15 @@ class ChatSacAPIService:
 			headers = {'access-token': api_credentials.api_token, 'Accept': 'application/json'}
 			response = json.loads(requests.get(url=url, headers=headers).text)
 			print(response)
-			for item in response:
-				if 'name' in item.keys():
-					if item['name'] == 'Principal':
-						return response[0]['id']
-				else:
-					print(f"Error occurred when getting sector id: {response['status']}, {response['msg']}")
-					return 'unknown'
+			print(type(response))
+			if isinstance(response, list):
+				for item in response:
+					if 'name' in item.keys():
+						if item['name'] == 'Principal':
+							return response[0]['id']
+			else:
+				print(f"Error occurred when getting sector id: {response['status']}, {response['msg']}")
+				return 'unknown'
 
 
 
