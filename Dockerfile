@@ -21,3 +21,6 @@ COPY ./ /app/
 
 # Executar a aplicação
 CMD ["uvicorn", "Chat:chatapp", "--host", "0.0.0.0", "--port", "7000", "--reload"]
+
+# run the container's build with the command "sudo docker build -t fastapi_chat ." at the root
+# run this container with the command "sudo docker run --network host -v $(pwd):/app fastapi_chat"
