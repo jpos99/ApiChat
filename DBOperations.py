@@ -32,8 +32,6 @@ class DBOperation:
 		}
 
 		response = requests.get(f"{self.DJANGO_ENDPOINT}conversa/{chat_id}/")
-		print(f"{self.DJANGO_ENDPOINT}conversa/{chat_id}/")
-		print('Conversa response status code', response.status_code)
 		if response.status_code == 404:
 			print('Conversa json data=', data)
 			response = requests.post(f"{self.DJANGO_ENDPOINT}conversa/create/", json=data)
@@ -65,9 +63,7 @@ class DBOperation:
 			}
 
 			response = requests.get(f"{self.DJANGO_ENDPOINT}menssagem/{message.get('IdMessage')}/")
-			print('Menssagem response status code', response.status_code)
 			if response.status_code == 404:
-				print('Mensaagem json data=', data)
 				response = requests.post(f"{self.DJANGO_ENDPOINT}menssagem/create/", json=data)
 			else:
 				response = requests.put(f"{self.DJANGO_ENDPOINT}menssagem/update/{message.get('IdMessage')}/", json=data)
@@ -84,8 +80,5 @@ class DBOperation:
 			"descricao_historico": f'Mensagem {personalized_message} enviada ao formando {formando_id} no contato numero: {phone_number}'
 		}
 		response = requests.post(f"{self.DJANGO_ENDPOINT}historico/create/", json=data)
-		print('Formando response status code', response.status_code)
-		print('Formando endpoint', f"{self.DJANGO_ENDPOINT}historico/create/")
-		print('Formando data', data)
 		if response.status_code != 201:
 			print(f"Error occurred when saving historico: {response.text}")

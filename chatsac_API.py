@@ -18,8 +18,6 @@ class ChatSacAPIService:
 			url = f'{self.base_url_request}sectors'
 			headers = {'access-token': api_credentials.api_token, 'Accept': 'application/json'}
 			response = json.loads(requests.get(url=url, headers=headers).text)
-			print(response)
-			print(type(response))
 			if isinstance(response, list):
 				for item in response:
 					if 'name' in item.keys():
@@ -45,7 +43,6 @@ class ChatSacAPIService:
 
 	def create_new_contact(self, contact, number):
 		url = f'{self.base_url_request}contacts/'
-		print('name =', contact['nome'], 'obj =', contact, 'number =', number)
 		if number[0:2] != '55':
 			number = f'55{number}'.strip()
 		contact_data = {
