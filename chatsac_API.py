@@ -46,7 +46,7 @@ class ChatSacAPIService:
 		if number[0:2] != '55':
 			number = f'55{number}'.strip()
 		contact_data = {
-			'name': f'{contact["curso"]} {contact["nome"]}'.strip(),
+			'nickName': f'{contact["curso"]} {contact["nome"]}'.strip(),
 			'number': f'{number}',
 			'email': contact['email'].strip(),
 			'observation': 'Contato inserido pelo fluxo de disparo.'
