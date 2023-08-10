@@ -10,8 +10,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 load_dotenv(os.path.join(BASE_DIR, 'ApiChat', '.env'))
 api_credentials = ChatSacAPI()
 
+
 class ChatSacAPIService:
-	def __init__(self):
+	def __init__(self, sector):
 		self.base_url_request = 'https://api.chatsac.com/core/v2/api/'
 
 		def get_sector_id():
@@ -21,13 +22,11 @@ class ChatSacAPIService:
 			if isinstance(response, list):
 				for item in response:
 					if 'name' in item.keys():
-						if item['name'] == 'Principal':
-							return response[0]['id']
+						if item['name'] == sector:
+							return item['id']
 			else:
 				print(f"Error occurred when getting sector id: {response['status']}, {response['msg']}")
 				return 'unknown'
-
-
 
 		self.sector_id = get_sector_id()
 
