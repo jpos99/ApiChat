@@ -16,13 +16,15 @@ def remove_nine_digit(number):
 
 
 def is_ready_to_recieve_msg(chat):
-	days_to_not_send_message = 3
+	days_to_not_send_message = 2
 	date_days_before = date.today() - timedelta(days=days_to_not_send_message)
 	if 'messages' in chat.keys():
 		for message in chat['messages']:
 			if message['isPrivate'] == False and message['isSystemMessage'] == False:
-				date_last_message = datetime.strptime(message['dhMessage'].split('T')[0],
-															   '%Y-%m-%d').date()
+				date_last_message = datetime.strptime(
+					message['dhMessage'].split('T')[0],
+					'%Y-%m-%d'
+				).date()
 				if date_last_message >= date_days_before:
 					return False
 	return True
