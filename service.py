@@ -34,8 +34,8 @@ def personalize_message(base_message: str, contact_name: str) -> str:
 	return base_message.replace('#NOME', contact_name.split(' ')[0])
 
 
-def schedule_to_send_messages(contact_data, message, datetime_to_start, sector):
-	chatsac_api = ChatSacAPIService(sector)
+def schedule_to_send_messages(contact_data, message, datetime_to_start, sector, company):
+	chatsac_api = ChatSacAPIService(sector, company)
 	scheduled_datetime = datetime.strptime(f'{datetime_to_start[0]}T{datetime_to_start[1]}', '%Y-%m-%dT%H:%M')
 	data_base = DBOperation()
 	for phone_number, contact_data in contact_data.items():
@@ -78,7 +78,7 @@ def schedule_to_send_messages(contact_data, message, datetime_to_start, sector):
 				"recipient": phone_number,
 			}
 			print(agendamento_envio_msg)
-			chatsac_api.schedule_text_message(agendamento_envio_msg)
+			#chatsac_api.schedule_text_message(agendamento_envio_msg)
 			scheduled_datetime = scheduled_datetime + timedelta(seconds=randint(1,10))
 			contact_details = chatsac_api.get_contact_details_by_id(contact_wa['id'])
 			time.sleep(1)

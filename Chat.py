@@ -15,7 +15,7 @@ chatapp = FastAPI()
 
 @chatapp.post('/dispatch')
 async def schedule_text_message(contacts: dict, background_tasks: BackgroundTasks) -> dict:
-	chat_sac = ChatSacAPIService(contacts['sector'])
+	chat_sac = ChatSacAPIService(contacts['sector'], contacts['company'])
 	channel_status = chat_sac.get_channel_status()
 	print(channel_status)
 	background_tasks.add_task(
@@ -23,7 +23,8 @@ async def schedule_text_message(contacts: dict, background_tasks: BackgroundTask
 		contacts['contacts'],
 		contacts['message'],
 		contacts['date'],
-		contacts['sector']
+		contacts['sector'],
+		contacts['company']
 	)
 	return {"channel_status": channel_status}
 
