@@ -27,8 +27,8 @@ class ChatSacAPI:
 	def get_token(self, company):
 		tokens = {
 			'MLN': self.api_token_milenium,
-			'IMA': self.api_token_milenium,
-			'TSL': self.api_token_milenium,
-			'GTZ': self.api_token_milenium,
+			'IMA': self.api_token_imaginarte,
+			'TSL': self.api_token_tecsol,
+			'GTZ': self.api_token_goetz,
 		}
 		return tokens.get(company, '')
