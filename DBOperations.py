@@ -44,6 +44,7 @@ class DBOperation:
 		return response.json()['id']
 
 	def update_message_db(self, wa_chat, conversa_id):
+		message_ids = []
 		for message in wa_chat.get('messages', []):
 			data = {
 				"conversa": conversa_id,
@@ -70,8 +71,11 @@ class DBOperation:
 
 			if response.status_code not in [200, 201]:
 				print(f"Error occurred when saving message: {response.text}")
-				return None
-			return response.json()['id']
+				continue
+			
+			message_ids.append(response.json()['id'])
+		
+		return message_ids
 
 	def update_formando(self, formando_id, personalized_message, phone_number):
 		data = {

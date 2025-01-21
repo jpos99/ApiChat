@@ -38,8 +38,8 @@ def schedule_to_send_messages(contact_data, message, datetime_to_start, sector, 
 	chatsac_api = ChatSacAPIService(sector, company)
 	scheduled_datetime = datetime.strptime(f'{datetime_to_start[0]}T{datetime_to_start[1]}', '%Y-%m-%dT%H:%M')
 	data_base = DBOperation()
+	not_send_contact = []
 	for phone_number, contact_data in contact_data.items():
-		not_send_contact = []
 		if len(phone_number) > 9 and contact_data['formando_id'] not in not_send_contact:
 			contact_wa = chatsac_api.get_contact_by_number(phone_number)
 			if 'status' in contact_wa.keys():
@@ -63,7 +63,6 @@ def schedule_to_send_messages(contact_data, message, datetime_to_start, sector, 
 			if not contact_ready_to_receive_msg:
 				menssagem = 'Menssagem não enviada pois está em contato'
 				not_send_contact.append(contact_data['formando_id'])
-
 				conversa_id = data_base.update_chat_db(wa_chat, contact_details['curChatId'], contact_data['formando_id'], phone_number)
 				data_base.update_message_db(wa_chat, conversa_id)
 				data_base.update_formando(contact_data['formando_id'], menssagem, phone_number)
@@ -79,11 +78,21 @@ def schedule_to_send_messages(contact_data, message, datetime_to_start, sector, 
 			}
 			print(agendamento_envio_msg)
 			chatsac_api.schedule_text_message(agendamento_envio_msg)
-			scheduled_datetime = scheduled_datetime + timedelta(seconds=randint(1,10))
+			scheduled_datetime = scheduled_datetime + timedelta(seconds=randint(1, 10))
 			contact_details = chatsac_api.get_contact_details_by_id(contact_wa['id'])
-			time.sleep(1)
-			conversa_id = data_base.update_chat_db(wa_chat, contact_details['curChatId'], contact_data['formando_id'],phone_number)
+			time.sleep(0.5)
+			print(contact_details)
+			conversa_id = data_base.update_chat_db(
+				wa_chat,
+				contact_details['curChatId'],
+				contact_data['formando_id'],
+				phone_number
+			)
 			data_base.update_message_db(wa_chat, conversa_id)
-			data_base.update_formando(contact_data['formando_id'], personalized_message, phone_number)
+			data_base.update_formando(
+				contact_data['formando_id'],
+				agendamento_envio_msg['content'],
+				agendamento_envio_msg['recipient']
+			)
 		else:
 			continue
