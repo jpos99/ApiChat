@@ -42,19 +42,19 @@ def schedule_to_send_messages(contact_data, message, datetime_to_start, sector, 
 	for phone_number, contact_data in contact_data.items():
 		if len(phone_number) > 9 and contact_data['formando_id'] not in not_send_contact:
 			contact_wa = chatsac_api.get_contact_by_number(phone_number)
-			if 'status' in contact_wa.keys():
+			if contact_wa.get('status', None) is not None:
 				if chatsac_api.number_exists_wa(phone_number)['status'] == 'VALID_WA_NUMBER':
 					contact = chatsac_api.create_new_contact(contact_data, phone_number)
-					if 'status' in contact.keys() and contact['status'] in ['200', '201', '202', '203', '204', '205']:
+					if contact.get('status', None) in ['200', '201', '202', '203', '204', '205']:
 						contact_wa = chatsac_api.get_contact_by_number(phone_number)
 					else:
 						print(f'Contato {phone_number} não pode ser inserido na plataforma ChatSac.')
 						continue
 				else:
 					continue
-			contact_details = chatsac_api.get_contact_details_by_id(contact_wa['id'])
-			time.sleep(1)
-			if 'curChatId' not in contact_details.keys():
+			contact_details = chatsac_api.get_contact_details_by_id(contact_wa.get('id', None))
+			time.sleep(0.5)
+			if contact_details.get('curChatId', None) is None:
 				wa_chat = chatsac_api.create_chat(phone_number, contact_wa['id'])
 			else:
 				wa_chat = chatsac_api.get_chat_information_by_id(contact_details['curChatId'])

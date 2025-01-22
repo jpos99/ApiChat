@@ -66,14 +66,14 @@ class DBOperation:
 			response = requests.get(f"{self.DJANGO_ENDPOINT}menssagem/{message.get('IdMessage')}/")
 			if response.status_code == 404:
 				response = requests.post(f"{self.DJANGO_ENDPOINT}menssagem/create/", json=data)
-			else:
-				response = requests.put(f"{self.DJANGO_ENDPOINT}menssagem/update/{message.get('IdMessage')}/", json=data)
+			'''else:
+				response = requests.put(f"{self.DJANGO_ENDPOINT}menssagem/update/{message.get('IdMessage')}/", json=data)'''
 
 			if response.status_code not in [200, 201]:
 				print(f"Error occurred when saving message: {response.text}")
 				continue
 			
-			message_ids.append(response.json()['id'])
+			message_ids.append(response.json().get('id', None))
 		
 		return message_ids
 
