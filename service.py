@@ -91,8 +91,8 @@ def schedule_to_send_messages(contact_data, message, datetime_to_start, sector, 
 			data_base.update_message_db(wa_chat, conversa_id)
 			data_base.update_formando(
 				contact_data['formando_id'],
-				agendamento_envio_msg['content'],
-				agendamento_envio_msg['recipient']
+				personalized_message,
+				phone_number
 			)
 		else:
 			continue
