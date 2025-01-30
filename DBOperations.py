@@ -84,6 +84,7 @@ class DBOperation:
 			"usuario_historico": 2,
 			"descricao_historico": f'Mensagem {personalized_message} enviada ao formando {formando_id} no contato numero: {phone_number}'
 		}
+		print("data update formando", data)
 		response = requests.post(f"{self.DJANGO_ENDPOINT}historico/create/", json=data)
 		if response.status_code != 201:
 			print(f"Error occurred when saving historico: {response.text}")
