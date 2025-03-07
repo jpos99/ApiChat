@@ -14,6 +14,7 @@ api_credentials = ChatSacAPI()
 class ChatSacAPIService:
 
 	def __init__(self, sector, company):
+		print("Iniciando classe ChatSacAPIService")
 		self.base_url_request = 'https://api.chatsac.com/core/v2/api/'
 		self.api_token = api_credentials.get_token(company)
 
@@ -142,33 +143,75 @@ class ChatSacAPIService:
 		pass
 
 	def send_text_message(self, number, contact_id, message):
-		url = f'{self.base_url_request}chats/send-text'
-		body = {
-			"number": number,
-			"contactId": contact_id,
-			"message": message,
-			"isWhisper": False,
-			"forceSend": True,
-			"verifyContact": False
-		}
-		headers = {
-			'access-token': self.api_token,
-			'Accept': 'application/json',
-			'Content-Type': 'application/json; charset=utf-8'
-		}
-		response = requests.post(url=url, json=body, headers=headers).text
-		response = json.loads(response)
-		print('ENVIO DE MSG =', response)
-		return response
+		try:
+			url = f'{self.base_url_request}chats/send-text'
+			body = {
+				"number": number,
+				"contactId": contact_id,
+				"message": message,
+				"isWhisper": False,
+				"forceSend": True,
+				"verifyContact": False
+			}
+			headers = {
+				'access-token': self.api_token,
+				'Accept': 'application/json',
+				'Content-Type': 'application/json; charset=utf-8'
+			}
+			
+			print("Headers:", headers)  # Debug
+			print("URL:", url)  # Debug
+			print("Body:", body)  # Debug
+			
+			response = requests.post(url=url, json=body, headers=headers)
+			
+			if response.status_code == 403:
+				error_msg = "Erro de autorização ao enviar mensagem. Verificar token de acesso."
+				print(error_msg)
+				return {'status': '403', 'error': error_msg}
+			
+			response_data = response.json()
+			print('ENVIO DE MSG =', response_data)
+			
+			if response.status_code not in [200, 201]:
+				error_msg = f"Erro ao enviar mensagem. Status: {response.status_code}, Resposta: {response_data}"
+				print(error_msg)
+				return {'status': str(response.status_code), 'error': error_msg}
+			
+			return response_data
+			
+		except Exception as e:
+			error_msg = f"Erro ao fazer requisição: {str(e)}"
+			print(error_msg)
+			return {'status': '500', 'error': error_msg}
 
 	def schedule_text_message(self, body):
-		url = f'{self.base_url_request}chats/messages/scheduler'
-		headers = {
-			'access-token': self.api_token,
-			'Accept': 'application/json',
-			'Content-Type': 'application/json; charset=utf-8'
-		}
-		response = requests.post(url=url, json=body, headers=headers).text
-		response = json.loads(response)
-		print('ENVIO DE MSG =', response)
-		return response
+		try:
+			url = f'{self.base_url_request}chats/messages/scheduler'
+			headers = {
+				'access-token': self.api_token,
+				'Accept': 'application/json',
+				'Content-Type': 'application/json; charset=utf-8'
+			}
+			
+			response = requests.post(url=url, json=body, headers=headers)
+			
+			if response.status_code == 403:
+				error_msg = "Erro de autorização ao enviar mensagem. Verificar token de acesso."
+				print(error_msg)
+				return {'status': '403', 'error': error_msg}
+			
+			response_data = response.json()
+			print('ENVIO DE MSG =', response_data)
+			
+			if response.status_code not in [200, 201]:
+				error_msg = f"Erro ao enviar mensagem. Status: {response.status_code}, Resposta: {response_data}"
+				print(error_msg)
+				return {'status': str(response.status_code), 'error': error_msg}
+			
+			return response_data
+			
+		except Exception as e:
+			error_msg = f"Erro ao fazer requisição: {str(e)}"
+			print(error_msg)
+			return {'status': '500', 'error': error_msg}

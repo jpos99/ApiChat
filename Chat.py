@@ -30,4 +30,4 @@ async def schedule_text_message(contacts: dict, background_tasks: BackgroundTask
 
 
 if __name__ == '__main__':
-	uvicorn.run(chatapp, port=7000)
+	uvicorn.run(chatapp, port=7000, reload=True)

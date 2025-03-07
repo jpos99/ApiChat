@@ -23,6 +23,7 @@ class ChatSacAPI:
 		self.api_token_milenium = os.getenv('CHATSAC_TOKEN_MILENIUM')
 		self.api_token_tecsol = os.getenv('CHATSAC_TOKEN_TECSOL')
 		self.api_token_goetz = os.getenv('CHATSAC_TOKEN_GOETZ')
+		self.api_token_iso = os.getenv('CHATSAC_TOKEN_ISO')
 
 	def get_token(self, company):
 		tokens = {
@@ -30,5 +31,6 @@ class ChatSacAPI:
 			'IMA': self.api_token_imaginarte,
 			'TSL': self.api_token_tecsol,
 			'GTZ': self.api_token_goetz,
+			'ISO': self.api_token_iso,
 		}
 		return tokens.get(company, '')
