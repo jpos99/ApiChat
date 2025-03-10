@@ -131,3 +131,56 @@ def schedule_to_send_messages(contact_data, message, datetime_to_start, sector, 
 				continue
 		else:
 			continue
+
+
+def send_messages_to_contact(contact, messages, sector, company):
+	print('CHAMOU SERVIÇE')
+	chatsac_api = ChatSacAPIService(sector, company)
+	data_base = DBOperation()
+	phone_number = remove_non_numeric_chars(contact['number'])
+	
+	if phone_number != '':
+		try:
+			contact_details = chatsac_api.get_contact_by_number(phone_number)
+			if not contact_details or 'curChatId' not in contact_details:
+				print(f"Erro: Detalhes do contato inválidos para {phone_number}")
+				return
+				
+			wa_chat = chatsac_api.get_chat_information_by_id(contact_details['curChatId'])
+			if not wa_chat or 'contact' not in wa_chat:
+				print(f"Erro: Chat inválido para {phone_number}")
+				return
+
+			for message in messages:
+				response = chatsac_api.send_text_message(
+					phone_number, 
+					wa_chat['contact'], 
+					message
+				)
+				
+				print(f"Resposta do envio: {response}")
+				
+				if response.get('status') == '200':
+					conversa_id = data_base.update_chat_db(
+						wa_chat,
+						contact_details['curChatId'],
+						contact['formando_id'],
+						phone_number
+					)
+					
+					if conversa_id:
+						data_base.update_message_db(wa_chat, conversa_id)
+						data_base.update_formando(
+							contact['formando_id'],
+							message,
+							phone_number
+						)
+					else:
+						print(f"Erro: Não foi possível obter ID da conversa para {phone_number}")
+				else:
+					print('Resposta da api com erro:', response.get('status'), response.get('error'))
+				
+		except Exception as e:
+			print(f"Erro ao processar mensagem para {phone_number}: {str(e)}")
+	else:
+		print('Numero não encontrado no contato', contact)

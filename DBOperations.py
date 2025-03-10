@@ -78,6 +78,10 @@ class DBOperation:
 		return message_ids
 
 	def update_formando(self, formando_id, personalized_message, phone_number):
+		print(f"DEBUG - Atualizando formando:")
+		print(f"  ID: {formando_id}")
+		print(f"  Mensagem: {personalized_message}")
+		print(f"  Telefone: {phone_number}")
 		print(f'Mensagem {personalized_message} enviada ao formando {formando_id} no contato numero: {phone_number}')
 		data = {
 			"formando_historico": formando_id,
